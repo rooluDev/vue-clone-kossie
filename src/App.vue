@@ -1,27 +1,33 @@
 <template>
-  <div class="name">{{ greet }}</div>
+    <div class="name">{{ name }}</div>
+    <button class="btn btn-primary" @click="updateName">click</button>
 </template>
 
 <script>
 export default {
-  setup() {
-    const name = "roolu Dev";
+    setup() {
+        let name = "roolu Dev";
 
-    const greeting = (name) => {
-      return "Hello " + name;
-    };
+        // const greeting = (name) => {
+        //   return "Hello " + name;
+        // };
 
-    const greet = greeting(name);
+        // const greet = greeting(name);
 
-    return {
-      greet,
-    };
-  },
+        const updateName = () => {
+            name = "roolu";
+        };
+
+        return {
+            name,
+            updateName,
+        };
+    },
 };
 </script>
 
 <style>
 .name {
-  color: red;
+    color: red;
 }
 </style>
