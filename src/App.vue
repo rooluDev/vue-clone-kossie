@@ -1,26 +1,29 @@
 <template>
-    <div class="name">{{ name }}</div>
+    <div :class="nameClass">{{ name }}</div>
+    <input :type="type" :value="name" />
     <button class="btn btn-primary" @click="updateName">click</button>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
     setup() {
-        let name = "roolu Dev";
-
-        // const greeting = (name) => {
-        //   return "Hello " + name;
-        // };
-
-        // const greet = greeting(name);
+        const name = ref("roolu");
+        const type = ref("number");
+        const nameClass = ref("");
 
         const updateName = () => {
-            name = "roolu";
+            name.value = "Dev";
+            type.value = "text";
+            nameClass.value = "name";
         };
 
         return {
             name,
             updateName,
+            type,
+            nameClass,
         };
     },
 };
