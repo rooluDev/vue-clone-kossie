@@ -1,14 +1,20 @@
 <template>
-  <div class="name">{{ name }}</div>
+  <div class="name">{{ greet }}</div>
 </template>
 
 <script>
 export default {
   setup() {
-    const name = "roolu Dev1";
+    const name = "roolu Dev";
+
+    const greeting = (name) => {
+      return "Hello " + name;
+    };
+
+    const greet = greeting(name);
 
     return {
-      name,
+      greet,
     };
   },
 };
