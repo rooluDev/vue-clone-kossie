@@ -1,9 +1,4 @@
 <template>
-    <!-- <div v-show="toggle">true</div>
-    <div v-show="!toggle">false</div>
-    <div v-if="toggle">true</div>
-    <div v-else>false</div>
-    <button @click="onToggle">Toggle</button> -->
     <div class="container">
         <h2 class="mt-2">To-Do List</h2>
         <form @submit.prevent="onSubmit">
@@ -20,7 +15,10 @@
         </form>
         <div v-for="todo in todos" :key="todo.id" class="card mt-2">
             <div class="card-body p-2">
-                {{ todo.subject }}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" v-model="todo.completed" />
+                    <label class="form-check-label">{{ todo.subject }}</label>
+                </div>
             </div>
         </div>
     </div>
@@ -31,12 +29,8 @@ import { ref } from "vue";
 
 export default {
     setup() {
-        // const toggle = ref(false);
         const todo = ref("");
-        const todos = ref([
-            { id: 1, subject: "buy apple" },
-            { id: 2, subject: "buy banana" },
-        ]);
+        const todos = ref([]);
 
         const hasError = ref(false);
 
@@ -48,18 +42,15 @@ export default {
                 todos.value.push({
                     id: Date.now(),
                     subject: todo.value,
+                    completed: false,
                 });
+                todo.value = "";
             }
         };
-
-        // const onToggle = () => {
-        //     toggle.value = !toggle.value;
-        // };
 
         return {
             todo,
             todos,
-            // toggle,
             hasError,
             onSubmit,
         };
