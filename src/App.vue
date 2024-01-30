@@ -17,7 +17,8 @@
             <div class="card-body p-2">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" v-model="todo.completed" />
-                    <label class="form-check-label">{{ todo.subject }}</label>
+                    <!-- <label class="form-check-label" :style="todo.completed ? todoStyle : {}">{{ todo.subject }}</label> -->
+                    <label class="form-check-label" :class="{ todo: todo.completed }">{{ todo.subject }}</label>
                 </div>
             </div>
         </div>
@@ -31,8 +32,11 @@ export default {
     setup() {
         const todo = ref("");
         const todos = ref([]);
-
         const hasError = ref(false);
+        const todoStyle = {
+            textDecoration: "line-through",
+            color: "gray",
+        };
 
         const onSubmit = () => {
             if (todo.value === "") {
@@ -53,13 +57,15 @@ export default {
             todos,
             hasError,
             onSubmit,
+            todoStyle,
         };
     },
 };
 </script>
 
 <style>
-.name {
-    color: red;
+.todo {
+    color: gray;
+    text-decoration: line-through;
 }
 </style>
