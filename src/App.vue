@@ -3,7 +3,7 @@
         <h2 class="mt-2">To-Do List</h2>
         <TodoSimpleForm @add-todo="addTodo" />
         <div v-if="!todos.length">추가된 Todo가 없습니다!</div>
-        <TodoList :todos="todos" @toggle-todo="toggleTodo" />
+        <TodoList :todos="todos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo" />
     </div>
 </template>
 
@@ -39,8 +39,8 @@ export default {
 
         return {
             todos,
-            addTodo,
             todoStyle,
+            addTodo,
             deleteTodo,
             toggleTodo,
         };
