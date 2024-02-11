@@ -26,10 +26,17 @@ export default {
         const todos = ref([]);
         const error = ref('');
 
-        const todoStyle = {
-            textDecoration: 'line-through',
-            color: 'gray'
-        };
+        const getTodos = async () => {
+            try {
+                const res = await axios.get('http://localhost:3000/todos');
+                todos.value = res.data;
+            } catch (err) {
+                console.log(err);
+                error.value = 'Something went wrong.';
+            }
+        }
+
+        getTodos();
 
         const addTodo = async (todo) => {
             error.value = '';
@@ -62,6 +69,11 @@ export default {
 
             return todos.value;
         });
+
+        const todoStyle = {
+            textDecoration: 'line-through',
+            color: 'gray'
+        };
 
         return {
             todos,
