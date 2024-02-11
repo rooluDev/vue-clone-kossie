@@ -5,8 +5,8 @@
         <hr />
         <TodoSimpleForm @add-todo="addTodo" />
         <div style="color: red">{{ error }}</div>
-        <div v-if="!filtreredTodos.length">There is nothig to display</div>
-        <TodoList :todos="filtreredTodos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo" />
+        <div v-if="!todos.length">There is nothig to display</div>
+        <TodoList :todos="todos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo" />
         <hr />
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, reactive } from 'vue';
+import { ref, computed, watch } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue';
 import axios from 'axios';
@@ -44,20 +44,6 @@ export default {
         const numberOfTodos = ref(0);
         const limit = 5;
         const currentPage = ref(1);
-        const a = reactive({
-            b: 1,
-            c: 3
-        });
-
-        watch([currentPage, numberOfTodos], (currentPage, prev) => {
-            console.log(currentPage, prev);
-        })
-
-        watch(() => [a.b, a.c], (current, prev) => {
-            console.log(current, prev);
-        })
-        a.b = 2;
-        a.c = 1;
 
         const numberOfPages = computed(() => {
             return Math.ceil(numberOfTodos.value / limit);
@@ -67,7 +53,7 @@ export default {
             currentPage.value = page;
             try {
                 const res = await axios.get(
-                    `http://localhost:3000/todos?_page=${page}&_limit=${limit}`
+                    `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
                 );
                 numberOfTodos.value = res.headers['x-total-count'];
                 todos.value = res.data;
@@ -119,15 +105,9 @@ export default {
             }
         };
 
-        const filtreredTodos = computed(() => {
-            if (searchText.value) {
-                return todos.value.filter(todo => {
-                    return todo.subject.includes(searchText.value);
-                });
-            }
-
-            return todos.value;
-        });
+        watch(searchText, () => {
+            getTodos(1);
+        })
 
         const todoStyle = {
             textDecoration: 'line-through',
@@ -142,7 +122,6 @@ export default {
             addTodo,
             deleteTodo,
             toggleTodo,
-            filtreredTodos,
             numberOfPages,
             currentPage,
             getTodos
