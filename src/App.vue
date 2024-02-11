@@ -25,6 +25,7 @@ export default {
     setup() {
         const todos = ref([]);
         const error = ref('');
+        const searchText = ref('');
 
         const getTodos = async () => {
             try {
@@ -52,10 +53,6 @@ export default {
             }
         };
 
-        const toggleTodo = index => {
-            todos.value[index].completed = !todos.value[index].completed;
-        };
-
         const deleteTodo = async index => {
             error.value = '';
             const id = todos.value[index].id;
@@ -68,7 +65,19 @@ export default {
             }
         };
 
-        const searchText = ref('');
+        const toggleTodo = async (index) => {
+            error.value = '';
+            const id = todos.value[index].id;
+            try {
+                await axios.patch('http://localhost:3000/todos/' + id, {
+                    completed: !todos.value[index].completed
+                })
+                todos.value[index].completed = !todos.value[index].completed;
+            } catch (err) {
+                console.log(err);
+                error.value = 'Something went wrong.';
+            }
+        };
 
         const filtreredTodos = computed(() => {
             if (searchText.value) {
