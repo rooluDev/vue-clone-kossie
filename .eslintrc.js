@@ -8,7 +8,8 @@ module.exports = {
         parser: 'babel-eslint'
     },
     rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off', //콘솔 사용 제한
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off' //디버거 사용 제한
+        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'vue/multi-word-component-names': 'off'
     }
 };
