@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, reactive } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue';
 import axios from 'axios';
@@ -44,6 +44,20 @@ export default {
         const numberOfTodos = ref(0);
         const limit = 5;
         const currentPage = ref(1);
+        const a = reactive({
+            b: 1,
+            c: 3
+        });
+
+        watch([currentPage, numberOfTodos], (currentPage, prev) => {
+            console.log(currentPage, prev);
+        })
+
+        watch(() => [a.b, a.c], (current, prev) => {
+            console.log(current, prev);
+        })
+        a.b = 2;
+        a.c = 1;
 
         const numberOfPages = computed(() => {
             return Math.ceil(numberOfTodos.value / limit);
