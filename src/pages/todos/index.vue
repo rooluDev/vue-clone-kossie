@@ -1,6 +1,5 @@
 <template>
-    <router-view />
-    <div class="container">
+    <div>
         <h2 class="mt-2">To-Do List</h2>
         <input class="form-control" type="text" v-model="searchText" placeholder="Search" @keyup.enter="searchTodo" />
         <hr />
