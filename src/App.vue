@@ -49,7 +49,6 @@ export default {
             return Math.ceil(numberOfTodos.value / limit);
         })
 
-
         const getTodos = async (page = currentPage.value) => {
             currentPage.value = page;
             try {
