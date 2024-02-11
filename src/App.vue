@@ -11,53 +11,53 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
-import TodoSimpleForm from "./components/TodoSimpleForm.vue";
-import TodoList from "./components/TodoList.vue";
-import axios from "axios";
+import { ref, computed } from 'vue';
+import TodoSimpleForm from './components/TodoSimpleForm.vue';
+import TodoList from './components/TodoList.vue';
+import axios from 'axios';
 
 export default {
     components: {
         TodoSimpleForm,
-        TodoList,
+        TodoList
     },
 
     setup() {
         const todos = ref([]);
-        const error = ref("");
+        const error = ref('');
 
         const todoStyle = {
-            textDecoration: "line-through",
-            color: "gray",
+            textDecoration: 'line-through',
+            color: 'gray'
         };
 
-        const addTodo = (todo) => {
-            error.value = "";
+        const addTodo = todo => {
+            error.value = '';
             axios
-                .post("http://localhost:3000/todos", { subject: todo.subject, completed: todo.completed })
-                .then((res) => {
+                .post('http://localhost:3000/todos', { subject: todo.subject, completed: todo.completed })
+                .then(res => {
                     console.log(res);
                     todos.value.push(res.data);
                 })
-                .catch((err) => {
+                .catch(err => {
                     console.log(err);
-                    error.value = "Something went wrong.";
+                    error.value = 'Something went wrong.';
                 });
         };
 
-        const toggleTodo = (index) => {
+        const toggleTodo = index => {
             todos.value[index].completed = !todos.value[index].completed;
         };
 
-        const deleteTodo = (index) => {
+        const deleteTodo = index => {
             todos.value.splice(index, 1);
         };
 
-        const searchText = ref("");
+        const searchText = ref('');
 
         const filtreredTodos = computed(() => {
             if (searchText.value) {
-                return todos.value.filter((todo) => {
+                return todos.value.filter(todo => {
                     return todo.subject.includes(searchText.value);
                 });
             }
@@ -73,9 +73,9 @@ export default {
             addTodo,
             deleteTodo,
             toggleTodo,
-            filtreredTodos,
+            filtreredTodos
         };
-    },
+    }
 };
 </script>
 
