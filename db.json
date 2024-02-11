@@ -1,0 +1,6 @@
+{
+    "todos": [
+        { "id": 1, "content": "hi1" },
+        { "id": 2, "content": "hi2" }
+    ]
+}
