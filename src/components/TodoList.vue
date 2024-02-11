@@ -1,12 +1,13 @@
 <template>
     <div v-for="(todo, index) in todos" :key="todo.id" class="card mt-2">
-        <div class="card-body p-2 d-flex align-items-center" @click="moveToPage(todo.id)">
+        <div class="card-body p-2 d-flex align-items-center" style="cursor: pointer" @click="moveToPage(todo.id)">
             <div class="form-check flex-grow-1">
-                <input class="form-check-input" type="checkbox" :checked="todo.completed" @change="toggleTodo(index)" />
+                <input class="form-check-input" type="checkbox" :checked="todo.completed" @change="toggleTodo(index, $event)"
+                    @click.stop />
                 <label class="form-check-label" :class="{ todo: todo.completed }">{{ todo.subject }}</label>
             </div>
             <div>
-                <button class="btn btn-danger btn-sm" @click="deleteTodo(index)">delete</button>
+                <button class="btn btn-danger btn-sm" @click.stop="deleteTodo(index)">delete</button>
             </div>
         </div>
     </div>
@@ -27,8 +28,8 @@ export default {
     setup(props, { emit }) {
         const router = useRouter();
 
-        const toggleTodo = (index) => {
-            emit("toggle-todo", index);
+        const toggleTodo = (index, event) => {
+            emit("toggle-todo", index, event.target.checked);
         };
 
         const deleteTodo = (index) => {
@@ -36,6 +37,7 @@ export default {
         };
 
         const moveToPage = (todoId) => {
+            // router.push('/todos/' + todoId);
             router.push({
                 name: 'Todo',
                 params: {
