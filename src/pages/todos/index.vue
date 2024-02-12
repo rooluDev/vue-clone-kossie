@@ -4,10 +4,8 @@
             <h2 class="mt-2">To-Do List</h2>
             <button class="btn btn-primary" @click="moveToCreatePage">Create Todo</button>
         </div>
-
         <input class="form-control" type="text" v-model="searchText" placeholder="Search" @keyup.enter="searchTodo" />
         <hr />
-        <TodoSimpleForm @add-todo="addTodo" />
         <div style="color: red">{{ error }}</div>
         <div v-if="!todos.length">There is nothig to display</div>
         <TodoList :todos="todos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo" />
