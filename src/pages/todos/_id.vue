@@ -30,7 +30,7 @@
 <script>
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import { computed, ref } from 'vue';
+import { computed, ref, onUnmounted } from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -47,7 +47,12 @@ export default {
         const showToast = ref(false);
         const toastMessage = ref('');
         const toastAlertType = ref('');
+        const timeout = ref(null);
         const todoId = route.params.id;
+
+        onUnmounted(() => {
+            clearTimeout(timeout.value);
+        })
 
         const getTodo = async () => {
             try {
@@ -81,7 +86,7 @@ export default {
             toastMessage.value = message;
             toastAlertType.value = type;
             showToast.value = true;
-            setTimeout(() => {
+            timeout.value = setTimeout(() => {
                 toastMessage.value = '';
                 toastAlertType.value = '';
                 showToast.value = false;
