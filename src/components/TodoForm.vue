@@ -28,7 +28,7 @@
             </div>
 
         </div>
-        <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">save</button>
+        <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">{{ editing ? 'Update' : 'create' }}</button>
         <button class="btn btn-outline-dark m-2" @click="moveToTodoListPage">Cancle</button>
     </form>
     <Toast v-if="showToast" :message="toastMessage" :type="toastAlertType" />
@@ -93,22 +93,32 @@ export default {
             })
         }
 
+        if (props.editing) {
+            getTodo();
+        }
+
         const onSave = async () => {
             try {
-                const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
+                let res;
+                const data = {
                     subject: todo.value.subject,
-                    completed: todo.value.completed
-                });
-                originalTodo.value = { ...res.data };
-                triggerToast('Successfully saved!');
+                    completed: todo.value.completed,
+                    body: todo.value.body
+                }
+                if (props.editing) {
+                    res = await axios.put(`http://localhost:3000/todos/${todoId}`, data);
+                    originalTodo.value = { ...res.data };
+                } else {
+                    res = await axios.post(`http://localhost:3000/todos`, data);
+                    todo.value.subject = '';
+                    todo.value.body = '';
+                }
+                const message = 'Successfully ' + (props.editing ? 'Updated' : 'Created');
+                triggerToast(message);
             } catch (error) {
                 console.log(error);
                 triggerToast('Something went wrong', 'danger');
             }
-        }
-
-        if (props.editing) {
-            getTodo();
         }
 
         return {
