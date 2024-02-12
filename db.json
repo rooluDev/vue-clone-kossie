@@ -87,19 +87,13 @@
     },
     {
       "subject": "12343253",
-      "completed": false,
+      "completed": true,
       "id": 24
     },
     {
       "subject": "erer",
       "completed": false,
       "id": 26
-    },
-    {
-      "subject": "asd",
-      "completed": false,
-      "body": "asd",
-      "id": 28
     }
   ]
 }
