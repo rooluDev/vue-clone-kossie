@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <Modal v-if="showModal" @close="closeModal" />
+    <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
 </template>
 
 <script>
@@ -34,15 +34,15 @@ export default {
     setup(props, { emit }) {
         const router = useRouter();
         const showModal = ref(false);
-        const todoDeleted = ref(null);
+        const todoDeleteId = ref(null);
 
         const openModal = (id) => {
-            todoDeleted.value = id;
+            todoDeleteId.value = id;
             showModal.value = true;
         }
 
         const closeModal = () => {
-            todoDeleted.value = null;
+            todoDeleteId.value = null;
             showModal.value = false;
         }
 
@@ -50,8 +50,11 @@ export default {
             emit("toggle-todo", index, event.target.checked);
         };
 
-        const deleteTodo = (index) => {
-            emit("delete-todo", index);
+        const deleteTodo = () => {
+            emit("delete-todo", todoDeleteId.value);
+            showModal.value = false;
+            todoDeleteId.value = null;
+
         };
 
         const moveToPage = (todoId) => {
