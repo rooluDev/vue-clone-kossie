@@ -1,10 +1,10 @@
 <template>
     <div v-for="(todo, index) in todos" :key="todo.id" class="card mt-2">
         <div class="card-body p-2 d-flex align-items-center" style="cursor: pointer" @click="moveToPage(todo.id)">
-            <div class="form-check flex-grow-1">
-                <input class="form-check-input" type="checkbox" :checked="todo.completed" @change="toggleTodo(index, $event)"
+            <div class="flex-grow-1">
+                <input class="ms-2 me-2" type="checkbox" :checked="todo.completed" @change="toggleTodo(index, $event)"
                     @click.stop />
-                <label class="form-check-label" :class="{ todo: todo.completed }">{{ todo.subject }}</label>
+                <span :class="{ todo: todo.completed }">{{ todo.subject }}</span>
             </div>
             <div>
                 <button class="btn btn-danger btn-sm" @click.stop="deleteTodo(index)">delete</button>
