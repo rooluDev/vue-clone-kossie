@@ -2,13 +2,14 @@
     <div v-if="loading">Loading...</div>
     <form v-else @submit.prevent="onSave">
         <div class="row">
-            <div class="col-6">
+            <!-- <div class="col-6">
                 <div class="form-group">
                     <label>Subject</label>
                     <input v-model="todo.subject" type="text" class="form-control mt-2 mb-2">
                     <div v-if="subjectError" class="text-red">{{ subjectError }}</div>
                 </div>
-            </div>
+            </div> -->
+            <Input label="Subject" v-model:subject="todo.subject" :error="subjectError" />
             <div v-if="editing" class="col-6">
                 <div class="form-group">
                     <label>Status</label>
@@ -44,10 +45,12 @@ import { computed, ref } from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 import { useToast } from '@/composables/toast';
+import Input from '@/components/Input.vue';
 
 export default {
     components: {
-        Toast
+        Toast,
+        Input
     },
     props: {
         editing: {
@@ -148,10 +151,6 @@ export default {
 </script>
 
 <style scoped>
-.text-red {
-    color: red
-}
-
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s ease;
