@@ -32,13 +32,15 @@
         <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">{{ editing ? 'Update' : 'create' }}</button>
         <button class="btn btn-outline-dark m-2" @click="moveToTodoListPage">Cancle</button>
     </form>
-    <Toast v-if="showToast" :message="toastMessage" :type="toastAlertType" />
+    <Transition name="fade">
+        <Toast v-if="showToast" :message="toastMessage" :type="toastAlertType" />
+    </Transition>
 </template>
 
 <script>
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import { computed, ref, props } from 'vue';
+import { computed, ref } from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 import { useToast } from '@/composables/toast';
@@ -148,5 +150,22 @@ export default {
 <style scoped>
 .text-red {
     color: red
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 0;
+    transform: translateY(0px);
 }
 </style>
