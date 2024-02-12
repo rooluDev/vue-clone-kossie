@@ -11,7 +11,9 @@
             </div>
         </div>
     </div>
-    <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
+    <Teleport to="#modal">
+        <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
+    </Teleport>
 </template>
 
 <script>
