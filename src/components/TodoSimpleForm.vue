@@ -14,11 +14,12 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 export default {
     emits: ["add-todo"],
 
-    setup(props, { emit }) {
+    setup() {
+        const { emit } = getCurrentInstance();
         const todo = ref("");
         const hasError = ref(false);
 

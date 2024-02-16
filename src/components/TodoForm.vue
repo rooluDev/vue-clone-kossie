@@ -41,7 +41,7 @@
 <script>
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import { computed, ref } from 'vue';
+import { computed, onUpdated, ref } from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 import { useToast } from '@/composables/toast';
@@ -66,6 +66,7 @@ export default {
             completed: false,
             body: ''
         });
+
         const subjectError = ref('');
         const originalTodo = ref(null);
         const loading = ref(false);
