@@ -19,12 +19,14 @@
 <script>
 import Toast from '@/components/Toast.vue';
 import { useToast } from './composables/toast';
+
 export default {
     components: {
         Toast
     },
     setup() {
         const { showToast, toastAlertType, toastMessage, triggerToast } = useToast();
+
         return {
             showToast,
             toastAlertType,
