@@ -71,7 +71,6 @@ export default {
             emit("delete-todo", todoDeleteId.value);
             showModal.value = false;
             todoDeleteId.value = null;
-
         };
 
         const moveToPage = (todoId) => {
