@@ -10,35 +10,22 @@
         <div v-if="!todos.length">There is nothig to display</div>
         <TodoList :todos="todos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo" />
         <hr />
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li v-if="currentPage !== 1" class="page-item">
-                    <a style="cursor: pointer" class="page-link" @click="getTodos(currentPage - 1)">Previous</a>
-                </li>
-                <li v-for="page in numberOfPages" :key="page" class="page-item"
-                    :class="currentPage === page ? 'active' : ''">
-                    <a style="cursor: pointer" class="page-link" @click="getTodos(page)">{{ page }}</a>
-                </li>
-                <li v-if="numberOfPages !== currentPage" class="page-item">
-                    <a style="cursor: pointer" class="page-link" @click="getTodos(currentPage + 1)">Next</a>
-                </li>
-            </ul>
-        </nav>
+        <Pagination v-if="todos.length" :numberOfPages="numberOfPages" :currentPage="currentPage" @click="getTodos" />
     </div>
 </template>
 
 <script>
 import { ref, computed, watch } from 'vue';
-import TodoSimpleForm from '@/components/TodoSimpleForm.vue';
 import TodoList from '@/components/TodoList.vue';
+import Pagination from '@/components/Pagination.vue';
 import axios from '@/axios';
 import { useToast } from '@/composables/toast';
 import { useRouter } from 'vue-router';
 
 export default {
     components: {
-        TodoSimpleForm,
         TodoList,
+        Pagination,
     },
 
     setup() {
